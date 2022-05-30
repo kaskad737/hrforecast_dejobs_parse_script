@@ -54,7 +54,7 @@ ___
 ## <a id='deploy'>How deploy script on the server</a>
 First, we need to create a virtual environment in which we install the version of python we need and all the modules that our script requires.
 
-Then, in program we can write something like this:
+Then, in program we can write something like this for connect to real DB:
 ```python
 DB_HOST, DB_NAME, DB_USER, DB_PASSWORD = tuple(
         os.environ.get(x) for x in ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD'])
