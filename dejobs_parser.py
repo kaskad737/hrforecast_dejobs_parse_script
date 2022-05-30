@@ -26,7 +26,7 @@ import re
 import json
 
 actual_date_and_crawl_time = datetime.datetime.now().strftime("DATE-%m-%d-%Y-TIME-%H-%M")
-file_name = f'{actual_date_and_crawl_time}_dejobs_parse_output_.json'
+file_name = f'{actual_date_and_crawl_time}_dejobs_parse_output.json'
 
 url = 'https://dejobs.org/jobs/ajax/joblisting/'
 
@@ -65,7 +65,6 @@ def db_results_saver():
 
 def jobs_urls_getter(pages_need_to_pharse):
     for page in range(0, pages_need_to_pharse):
-
         # Assume number of pages will not be more than 50
         if page + 1 > 50:
             break
@@ -108,13 +107,13 @@ def page_parser():
         job_location = soup.find('span', itemprop='address')
         try:
             location = job_location.find_next('span', itemprop='addressLocality').text
-        except Exception as exc:
+        except:
             location = None
 
         # Country
         try:
             country = job_location.find_next('meta', itemprop='addressCountry')['content']
-        except Exception as exc:
+        except:
             country = country = job_location.find_next('span', itemprop='addressCountry').text
 
         results['location'] = location

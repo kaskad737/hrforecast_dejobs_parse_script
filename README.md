@@ -13,11 +13,11 @@
 ---
 
 ## <a id='intro'>Introduction</a>
-The purpose of this script is to parse data from dejobs.org, then process them and save them to the database and json file
+The purpose of this script is to parse data from dejobs.org, then process them and save them to the database and json file.
 ___
 ## <a id='structdesc'>Structure description</a>
 
-File ```dejobs.py``` сontains actually script for parsing data from [dejobs.org](https://dejobs.org/jobs/) and saves it to database
+File ```dejobs.py``` сontains actually script for parsing data from [dejobs.org](https://dejobs.org/jobs/) and saves it to database and json file.
 
 
 
@@ -46,23 +46,26 @@ ___
 ## <a id='DB'>Database SQL Tables</a>
 ### Jobs Table Schema
 ![table_schema.jpg](table_schema.jpg)
+
 **In the screenshot you can see what attributes our table has.**
 I would like to focus attention on the attribute **Job_Title**, which is Primary Key, to avoid duplicates in DB.
 ___
 
 ## <a id='deploy'>How deploy script on the server</a>
-First, we need to create a virtual environment in which to install the version of python we need and all the modules that our script requires.
+First, we need to create a virtual environment in which we install the version of python we need and all the modules that our script requires.
 
+Then, in program we can write something like this:
 ```python
 DB_HOST, DB_NAME, DB_USER, DB_PASSWORD = tuple(
         os.environ.get(x) for x in ['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASSWORD'])
 ```
-all these variables are stored in .env
+to load all these variables from .env.
+All these variables are stored in .env becouse of security reasons.
 
 To run the script on the server at 11:55pm each day, we need to run crontab service ```crontab -e```, then in editor we need set the time when our script will be executed.
 We can do it this way -
 ```
-55 23 * * * /bin/bash -c "cd /home/OUR_USER/script_folder/ && source .venv/bin/activate && python /home/OUR_USER/script_folder/dejobs_parser.py"
+55 23 * * * /bin/bash -c "cd /home/OUR_USER/script_folder/ && source .venv/bin/activate && python /home/OUR_USER/script_folder/dejobs_parser.py --pages_to_parse (number of pages)"
 ```
 This command, added to the tab cron, will automatically start a virtual environment and in it run our script on the server at the time we want every day.
 
